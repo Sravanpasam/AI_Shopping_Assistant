@@ -1,0 +1,5 @@
+# Development / verification only — not needed to run ShopBot.
+# Installed separately so the runtime environment stays lean.
+#   .venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+#   .venv\Scripts\python.exe -m playwright install chromium
+playwright==1.64.0

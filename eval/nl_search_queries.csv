@@ -1,0 +1,51 @@
+query,expected_asin,phrasing,note
+JINRI hair dryer,B01D2IXB20,bare,JINRI professional blow dryer
+I want a JINRI hair dryer,B01D2IXB20,request,prefix phrasing
+professional blow dryer with ceramic ionic,B01D2IXB20,use,use-description
+JINRI hair dyer,B01D2IXB20,typo,missing r
+OKAY Jamaican castor oil shampoo,B0CDNZ7F2V,bare,castor oil shampoo
+show me OKAY Jamaican castor oil shampoo,B0CDNZ7F2V,request,politeness filler
+moisture growth shampoo with castor oil,B0CDNZ7F2V,use,use-description
+OKAY Jamaican castor oil shampo,B0CDNZ7F2V,typo,missing o
+essence waterproof mascara,B0B7L451Z9,bare,essence waterproof mascara
+I want essence waterproof mascara,B0B7L451Z9,request,prefix phrasing
+volumizing mascara for dramatic lashes,B0B7L451Z9,use,use-description
+essence waterproof mascarra,B0B7L451Z9,typo,extra r
+Bed Head curling wand,B01M1OFZOG,bare,Bed Head curling wand
+show me a Bed Head curling wand,B01M1OFZOG,request,prefix phrasing
+something to make tousled waves with a jumbo barrel,B01M1OFZOG,use,use-description
+Bed Head curling wnad,B01M1OFZOG,typo,transposed letters
+Wet Brush detangler,B0797GW888,bare,Wet Brush detangler
+I want a Wet Brush detangler,B0797GW888,request,prefix phrasing
+brush for tangles in wet hair,B0797GW888,use,use-description
+Wet Brush detanglr,B0797GW888,typo,missing e
+Dr.'s Remedy nail polish,B0BNWSR278,bare,Dr.'s Remedy nail polish
+show me Dr.'s Remedy nail polish,B0BNWSR278,request,prefix phrasing
+enriched nail polish in resilient rose,B0BNWSR278,use,use-description
+Dr.'s Remedy nail polsih,B0BNWSR278,typo,transposed letters
+MARLOWE body lotion,B08XMBHL8C,bare,MARLOWE body lotion
+I want MARLOWE body lotion,B08XMBHL8C,request,prefix phrasing
+extra moisturizing body lotion for dry skin,B08XMBHL8C,use,use-description
+MARLOWE body loton,B08XMBHL8C,typo,missing i
+Auric Blends sandalwood perfume oil,B0000ZLF18,bare,Auric Blends perfume oil
+show me Auric Blends sandalwood perfume oil,B0000ZLF18,request,prefix phrasing
+perfume oil that smells like sandalwood,B0000ZLF18,use,use-description
+Auric Blends sandalwod perfume oil,B0000ZLF18,typo,missing o
+EmaxDesign makeup brushes,B07G19ZXWB,bare,EmaxDesign brush set
+I want EmaxDesign makeup brushes,B07G19ZXWB,request,prefix phrasing
+17 piece synthetic brush kit for foundation and blush,B07G19ZXWB,use,use-description
+EmaxDesign makeup brushe,B07G19ZXWB,typo,missing s
+Colonial Dames vitamin E moisturizer,B07K6VJFQH,bare,Colonial Dames moisturizer
+show me Colonial Dames vitamin E moisturizer,B07K6VJFQH,request,prefix phrasing
+moisturizer for chapped dry skin and fine lines,B07K6VJFQH,use,use-description
+Colonial Dames moisturizr,B07K6VJFQH,typo,missing e
+quantum flux capacitor,,nonsense,no such product
+dragon scale armor,,nonsense,no such product
+cat harness for space travel,,nonsense,no such product
+solar powered umbrella,,nonsense,no such product
+invisible sandwich,,nonsense,no such product
+lunar rover tires,,nonsense,no such product
+banana flavored modem,,nonsense,no such product
+holographic pet leash,,nonsense,no such product
+time machine warranty,,nonsense,no such product
+underwater bicycle helmet,,nonsense,no such product

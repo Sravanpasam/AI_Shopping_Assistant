@@ -1,0 +1,26 @@
+{
+  "site_id": "shopstore",
+  "name": "ShopStore",
+  "assistant_name": "ShopBot",
+  "scope_description": "a small online beauty and personal-care store selling makeup, skin care, hair care, fragrance, nail and bath & body products",
+  "currency": "USD",
+  "secondary_currency": "AED",
+  "secondary_currency_rate": 3.67,
+  "languages": ["en", "ar"],
+  "pages": {
+    "home": "#/",
+    "search": "#/search?q={q}&asins={asins}&min_price={min_price}&max_price={max_price}&category={category}&sort={sort}",
+    "category": "#/category/{category}",
+    "product": "#/product/{asin}",
+    "compare": "#/compare?asins={asins}",
+    "cart": "#/cart",
+    "orders": "#/orders?order_id={order_id}",
+    "help": "#/help/{topic}"
+  },
+  "paths": {
+    "catalog": "data/catalog.parquet",
+    "reviews": "data/reviews.parquet",
+    "docs": "docs",
+    "orders_db": "data/orders.db"
+  }
+}

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShopBot: Bilingual E-Commerce NLP System - Presentation</title>
+<style>
+  :root {
+    --navy: #0f1e36;
+    --dark: #1e293b;
+    --light-bg: #f8fafc;
+    --card-bg: #ffffff;
+    --border: #e2e8f0;
+    --blue: #1a56db;
+    --teal: #0d9488;
+    --emerald: #10975a;
+    --coral: #e14d2a;
+    --muted: #64748b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #0b1120;
+    color: var(--dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  .deck-container {
+    position: relative;
+    width: 92vw;
+    max-width: 1366px;
+    height: 51.75vw;
+    max-height: 768px;
+    background: var(--light-bg);
+    border-radius: 14px;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    padding: 38px 48px;
+    flex-direction: column;
+  }
+  .slide.active {
+    display: flex;
+    animation: fadeIn 0.25s ease-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.995); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* Slide 1 Cover */
+  .slide-cover {
+    background: var(--navy);
+    color: #ffffff;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 80px;
+  }
+  .cover-bar {
+    width: 70px;
+    height: 7px;
+    background: var(--coral);
+    margin-bottom: 24px;
+    border-radius: 4px;
+  }
+  .cover-title {
+    font-size: 42px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .cover-subtitle {
+    font-size: 22px;
+    font-weight: 400;
+    color: #c7d2fe;
+    margin-bottom: 36px;
+  }
+  .cover-meta {
+    font-size: 17px;
+    color: #e2e8f0;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .cover-tags {
+    font-size: 15px;
+    color: #94a3b8;
+  }
+
+  /* Regular Slides Header */
+  .slide-header {
+    margin-bottom: 22px;
+  }
+  .badge {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 6px;
+  }
+  .slide-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--navy);
+  }
+
+  /* Cards Grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 26px;
+    flex: 1;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  }
+  .card-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title.blue { color: var(--blue); }
+  .card-title.teal { color: var(--teal); }
+  .card-title.emerald { color: var(--emerald); }
+  .card-title.coral { color: var(--coral); }
+  .card-title.navy { color: var(--navy); }
+
+  .bullet-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .bullet-list li {
+    font-size: 14.5px;
+    line-height: 1.48;
+    color: var(--dark);
+    position: relative;
+    padding-left: 18px;
+  }
+  .bullet-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: -1px;
+    color: var(--blue);
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .bullet-list li strong {
+    color: #0f172a;
+    font-weight: 700;
+  }
+
+  /* Metrics highlight box */
+  .highlight-metric {
+    background: #ecfdf5;
+    border: 1.5px solid #a7f3d0;
+    color: #065f46;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  /* Controls Footer */
+  .deck-footer {
+    position: absolute;
+    bottom: 16px;
+    left: 48px;
+    right: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .nav-btn {
+    background: var(--navy);
+    color: #ffffff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .nav-btn:hover { background: var(--blue); }
+  .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+<div class="deck-container">
+
+  <!-- SLIDE 1 -->
+  <div class="slide slide-cover active" data-index="1">
+    <div class="cover-bar"></div>
+    <h1 class="cover-title">ShopBot: Bilingual E-Commerce NLP System</h1>
+    <h2 class="cover-subtitle">From Zero-Shot Semantic Retrieval to Grounded Multi-Tool Agent Orchestration</h2>
+    <div class="cover-meta">Master of Applied Artificial Intelligence | NLP Capstone Project</div>
+    <div class="cover-tags">Python • Flask • FAISS • Sentence-Transformers • OpenAI Whisper • Google Gemini & Groq</div>
+  </div>
+
+  <!-- SLIDE 2 -->
+  <div class="slide" data-index="2">
+    <div class="slide-header">
+      <div class="badge">Project Overview</div>
+      <h2 class="slide-title">Executive Overview: Project Goal & System Evolution</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-title teal">The Challenge & Core Goals</div>
+        <ul class="bullet-list">
+          <li><strong>Real-World Problem:</strong> Traditional keyword search fails when shoppers use everyday conversational phrases ("something for dry frizzy hair") or inquire about store policies.</li>
+          <li><strong>Bilingual Parity:</strong> Seamless native English and Arabic interaction with automatic right-to-left layout and cultural/currency translation.</li>
+          <li><strong>Grounded Truth First:</strong> Zero hallucination tolerance: the bot never invents products, prices, or store policies.</li>
+          <li><strong>Voice-First Access:</strong> OpenAI Whisper converts spoken voice directly into the search bar, enabling full digital inclusion.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title blue">Dual Architecture: System A vs System B</div>
+        <ul class="bullet-list">
+          <li><strong>System A (Baseline - Frozen):</strong> Fast local retrieval pipeline combining sentence-transformer cosine intent classification, FAISS dense search, and regex policy parsing.</li>
+          <li><strong>System B (Active LLM Agent):</strong> Autonomous tool-calling agent (Gemini 2.0 Flash / Groq LLaMA-3.3-70B) orchestrating 10 grounded tools in a bounded loop (≤5 rounds).</li>
+          <li><strong>Navigation Over Walls of Text:</strong> Emits deep-link action objects that drive storefront UI pages (search, compare, orders) dynamically.</li>
+          <li><strong>Offline Safety Fallback:</strong> Automatically falls back to local rules if cloud AI quotas are exhausted.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 -->
+  <div class="slide" data-index="3">
+    <div class="slide-header">
+      <div class="badge">Dataset Selection</div>
+      <h2 class="slide-title">Dataset Selection & Structured Knowledge Repository</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-title teal">Non-Technical Rationale</div>
+        <ul class="bullet-list">
+          <li><strong>Real Marketplace Benchmark:</strong> Sourced from Amazon Reviews 2023 (McAuley Lab) focusing on the All_Beauty category (~1,000 products, 9M+ reviews sampled).</li>
+          <li><strong>Authentic Shopper Voices:</strong> Contains authentic customer reviews, star ratings, and real product specifications rather than synthetic dummy copy.</li>
+          <li><strong>Realistic Store Policies:</strong> 5 comprehensive policy manuals covering returns (14-day window), warranty (12 mo electronics), shipping, payments, and cancellations.</li>
+          <li><strong>Live Order Ledger:</strong> SQLite database (orders.db) modeling genuine customer fulfillment lifecycles (ORD-10001+).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title blue">Deep Technical Data Schema</div>
+        <ul class="bullet-list">
+          <li><strong>Catalog Schema (catalog.parquet):</strong> parent_asin, title, store, price (USD), average_rating (1–5), rating_number, category_path, features_text, description_text, n_reviews_sampled.</li>
+          <li><strong>Reviews Schema (reviews.parquet):</strong> parent_asin, rating, title, text, helpful_vote, verified_purchase, timestamp. Filtered to ≥5 verified reviews per item.</li>
+          <li><strong>Policy Documents (docs/*.md):</strong> Segmented into semantic chunks by headers and paragraphs for dense vector retrieval.</li>
+          <li><strong>Order Database (SQLite):</strong> Relational schema tracking order statuses, courier tracking IDs, and estimated arrival dates.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 -->
+  <div class="slide" data-index="4">
+    <div class="slide-header">
+      <div class="badge">Pre-Processing Strategy</div>
+      <h2 class="slide-title">Pre-Processing Strategy & Query Normalization</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-title blue">Query Normalizer (query_normalizer.py)</div>
+        <ul class="bullet-list">
+          <li><strong>Shopping Filler Removal:</strong> Automatically strips conversational filler in EN & AR ("I want", "show me", "أبحث عن", "من فضلك") while isolating search terms.</li>
+          <li><strong>Catalog Typo Repair:</strong> Uses Gestalt pattern matching (difflib) strictly against words in the catalog (cutoff ≥ 0.72). Fixes "mascarra" -> "mascara" without corrupting brands.</li>
+          <li><strong>Zero Neural Overhead:</strong> 100% deterministic rule-based processing executing in under 1ms on CPU.</li>
+          <li><strong>Protected Tokens:</strong> Price tokens ('under', 'between', 'aed', '$') are protected from typo alteration so parsers read them accurately.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title teal">Price Parsing & Data Synthesis</div>
+        <ul class="bullet-list">
+          <li><strong>Dual-Currency Parsing (price_parser.py):</strong> Extracts min/max price bounds from natural text ("under $20", "between 15 and 30 dollars", "under 100 AED").</li>
+          <li><strong>Currency Parity:</strong> Converts AED amounts to USD using a fixed rate (3.67 AED = $1.00 USD) for seamless multilingual search.</li>
+          <li><strong>False-Positive Shield:</strong> Distinguishes prices from volume/weight/counts ("50 ml", "pack of 2", "spf 30") to prevent bogus filters.</li>
+          <li><strong>Catalog Text Fusion:</strong> Synthesizes title, category hierarchy, bullet points, and descriptions into unified semantic retrieval documents.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5 -->
+  <div class="slide" data-index="5">
+    <div class="slide-header">
+      <div class="badge">Model Selection</div>
+      <h2 class="slide-title">Model Selection & Configuration Topology</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-title teal">Local NLP Models (System A & Tooling)</div>
+        <ul class="bullet-list">
+          <li><strong>Sentence-Transformers (all-MiniLM-L6-v2):</strong> 384-dimensional dense vectors, 22M parameters, ultra-fast CPU inference (~15ms), zero cloud API cost.</li>
+          <li><strong>FAISS IndexFlatIP (Cosine Similarity):</strong> Normalized L2 inner product vectors for instant top-50 nearest neighbor retrieval.</li>
+          <li><strong>Scikit-Learn TF-IDF Engines:</strong> Word N-grams (1–2) with sublinear TF scaling + Character N-grams (3–5) for typo resilience.</li>
+          <li><strong>OpenAI Whisper (base / tiny):</strong> Multilingual ASR for speech-to-text. Browser audio (WebM) converted server-side to WAV via ffmpeg.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title blue">Agent LLMs & Translation (System B)</div>
+        <ul class="bullet-list">
+          <li><strong>Google Gemini 2.0 Flash:</strong> Primary tool-calling agent. Fast time-to-first-token, native JSON schemas, temperature=0.2 for strict factual precision.</li>
+          <li><strong>Groq LLaMA-3.3-70B Versatile:</strong> Hot-swappable OpenAI-compatible backup provider via httpx, activated automatically on quota limits.</li>
+          <li><strong>Translation Pipeline (langdetect + deep-translator):</strong> Deterministic language tagging with sliding rate limiters (3 req/sec).</li>
+          <li><strong>In-Memory LRU Cache:</strong> 2,000-entry memory cache eliminates repetitive API translation calls for recurring product titles.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6 -->
+  <div class="slide" data-index="6">
+    <div class="slide-header">
+      <div class="badge">Training / Adaptation</div>
+      <h2 class="slide-title">Training, Adaptation & Retrieval Engineering</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-title teal">Why Zero-Shot Retrieval Over Fine-Tuning?</div>
+        <ul class="bullet-list">
+          <li><strong>The Flaw of LLM Fine-Tuning:</strong> Fine-tuning models on product catalogs leads to hallucinated prices, inventory drift, and high retraining expenses.</li>
+          <li><strong>Retrieval-Augmented Generation (RAG):</strong> LLMs act as uncorrupted reasoning engines; live catalog, policy, and order data are injected via tools.</li>
+          <li><strong>Zero-Shot Dense Similarity:</strong> Calibrated similarity thresholds empirically across positive queries and off-topic nonsense.</li>
+          <li><strong>Fingerprinted Index Cache:</strong> FAISS index caches row counts and ASIN hashes, rebuilding automatically only when catalog files change.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title blue">Hybrid Reciprocal Rank Fusion (RRF)</div>
+        <ul class="bullet-list">
+          <li><strong>RRF Formula:</strong> Score = 1.0 / (60 + DenseRank) + 0.35 / (60 + WordRank) + 0.15 / (60 + CharRank).</li>
+          <li><strong>Dense + Lexical Balance:</strong> Dense vectors understand semantics ("tousled waves"); lexical vectors locate exact brand names and typos.</li>
+          <li><strong>Search Acceptance Floor (0.51):</strong> Top hit must exceed 0.51 similarity to be accepted as a confident match.</li>
+          <li><strong>Margin Pruning (0.16):</strong> Keeps only products within 0.16 of the top match, cleanly cutting off irrelevant tails.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7 -->
+  <div class="slide" data-index="7">
+    <div class="slide-header">
+      <div class="badge">Agent Architecture</div>
+      <h2 class="slide-title">Tool-Grounded Agent Loop & Navigation Actions</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-title blue">10 Grounded Agent Tools (agent_tools.py)</div>
+        <ul class="bullet-list">
+          <li><strong>Catalog Tools:</strong> search_products (hybrid search + price bounds), get_product_details (specs), search_reviews (verified customer opinions).</li>
+          <li><strong>Comparison Tool:</strong> compare_products builds deterministic spec tables directly from catalog attributes.</li>
+          <li><strong>Policy & Knowledge:</strong> search_policies retrieves semantically matching chunks from policy documentation (floor 0.40).</li>
+          <li><strong>Order Ledger:</strong> check_order queries SQLite orders.db for fulfillment status, tracking IDs, and estimated arrival dates.</li>
+          <li><strong>Specialized Assist:</strong> build_routine, gift_finder, best_in_category, escalate_to_human.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title teal">Safety Boundaries & Navigation Actions</div>
+        <ul class="bullet-list">
+          <li><strong>Strict Grounding Rules:</strong> Prompt explicitly forbids guessing. Every price, rating, date, and status must come from tool results in that turn.</li>
+          <li><strong>Prompt Injection Defense:</strong> The prompt instructs the model to treat all tool outputs (reviews, descriptions) as untrusted data, never instructions.</li>
+          <li><strong>No Fake Actions:</strong> The bot cannot claim to execute refunds or cancellations; it informs the user and initiates human handoff.</li>
+          <li><strong>Structured Deep Links:</strong> Tool calls produce action objects (type: 'navigate', page: 'search' | 'compare' | 'orders' | 'help') to drive the UI.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8 -->
+  <div class="slide" data-index="8">
+    <div class="slide-header">
+      <div class="badge">Evaluation & Results</div>
+      <h2 class="slide-title">Evaluation Metrics & Experimental Results</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-title emerald">Natural Language Search Benchmark</div>
+        <ul class="bullet-list">
+          <li><strong>Test Suite (measure_search.py):</strong> 50 real-world queries covering 5 distinct phrasings tested against expected catalog ASINs.</li>
+          <li><strong>Bare Queries ('JINRI hair dryer'):</strong> 10 / 10 -> 100.0% Hit@3</li>
+          <li><strong>Polite Requests ('show me Bed Head wand'):</strong> 10 / 10 -> 100.0% Hit@3</li>
+          <li><strong>Use Descriptions ('tousled waves barrel'):</strong> 9 / 10 -> 90.0% Hit@3</li>
+          <li><strong>Typo Corrupted ('essence mascarra'):</strong> 10 / 10 -> 100.0% Hit@3</li>
+          <li><strong>Nonsense / Out-of-Scope:</strong> 10 / 10 -> 100.0% Rejection</li>
+        </ul>
+        <div class="highlight-metric">Overall Search Performance: 97.5% Hit@3 | 100.0% Nonsense Rejection</div>
+      </div>
+      <div class="card">
+        <div class="card-title blue">System A vs System B (104 Questions)</div>
+        <ul class="bullet-list">
+          <li><strong>Benchmark Setup (run_eval.py):</strong> 104 questions across 10 categories (products, price, policies, orders, escalation, follow-up).</li>
+          <li><strong>Product Search:</strong> System A: 75.0% | System B (Agent): 97.5%</li>
+          <li><strong>Price Filtering:</strong> System A: 100.0% | System B: 100.0%</li>
+          <li><strong>Policy Questions (Returns, Warranty):</strong> System A: 0.0% (Regex failed) | System B: 95.0%+</li>
+          <li><strong>Order Tracking (SQLite):</strong> System A: 10.0% | System B: 100.0%</li>
+          <li><strong>Human Escalation:</strong> System A: 0.0% | System B: 100.0%</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9 -->
+  <div class="slide" data-index="9">
+    <div class="slide-header">
+      <div class="badge">Performance & Biases</div>
+      <h2 class="slide-title">Performance Analysis & Potential Biases</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-title coral">Multilingual & Dialectal Biases</div>
+        <ul class="bullet-list">
+          <li><strong>Arabic Dialect Gap:</strong> Translation services assume Modern Standard Arabic (MSA); colloquial dialects (Egyptian, Gulf, Levantine) can experience translation drift.</li>
+          <li><strong>Pre-Filtering Mitigation:</strong> Added Arabic character pattern matching and transliteration rules in query_normalizer and greetings.py before translation.</li>
+          <li><strong>Whisper Dialect WER:</strong> Whisper 'base' model exhibits lower confidence on fast dialectal Arabic; resolved by supporting the 'small' model.</li>
+          <li><strong>Bidirectional RTL Layout:</strong> Dynamic dir='rtl' styling ensures native Arabic visual alignment.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title teal">Catalog Skew & Review Sentiment Bias</div>
+        <ul class="bullet-list">
+          <li><strong>Domain Concentration:</strong> Catalog is 100% beauty items. Dense vectors exhibit high baseline similarity for generic cosmetic words ('smooth', 'glow').</li>
+          <li><strong>Lexical RRF Counter-Weight:</strong> Hybrid search balances semantic embeddings with word and character TF-IDF, preventing false matches on generic copy.</li>
+          <li><strong>Review Positivity Skew:</strong> Sampled Amazon reviews skew heavily toward 4 and 5 stars. Pure text summaries can sound uniformly positive.</li>
+          <li><strong>Quantitative Grounding:</strong> Surfaces raw average star ratings and total review counts directly alongside summaries to give an honest view.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10 -->
+  <div class="slide" data-index="10">
+    <div class="slide-header">
+      <div class="badge">Ethics & Society</div>
+      <h2 class="slide-title">Ethical, Legal & Societal Implications</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-title blue">Consumer Protection & Truth-in-Commerce</div>
+        <ul class="bullet-list">
+          <li><strong>Preventing Financial Harm:</strong> An e-commerce bot that hallucinates a lower price or fake return policy creates legal liability and financial disputes.</li>
+          <li><strong>Strict Grounding Constraint:</strong> Every factual claim (price, warranty period, delivery charge) is programmatically validated against retrieved tool output.</li>
+          <li><strong>Clear Refusal of Unverifiable Facts:</strong> If information is not in the catalog or policy documents, the assistant explicitly states it is unavailable.</li>
+          <li><strong>Medical Claim Defense:</strong> Questions asking for medical cures (e.g. 'will this cream cure my disease?') trigger safe refusal advising consultation with a doctor.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title emerald">Authority Boundaries & Inclusion</div>
+        <ul class="bullet-list">
+          <li><strong>Execution vs Reporting Boundary:</strong> Autonomous AI must not possess write-access to financial or refund databases. ShopBot is read-only and directs write requests to human agents.</li>
+          <li><strong>PII Privacy Protection:</strong> Order tracking (/api/orders/&lt;id&gt;) sanitizes all personally identifiable information (customer name, address, card) and shows only fulfillment progress.</li>
+          <li><strong>Accessibility Inclusion:</strong> OpenAI Whisper voice input empowers visually impaired, low-literacy, and non-native English speakers to shop seamlessly.</li>
+          <li><strong>Human Escalation Protocol:</strong> Recognizes customer frustration and billing disputes, instantly providing seamless handoff to human support.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11 -->
+  <div class="slide" data-index="11">
+    <div class="slide-header">
+      <div class="badge">Resilience & Reliability</div>
+      <h2 class="slide-title">Production Resilience & Fallback Safety Net</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-title blue">Multi-Tier LLM Fallbacks & Budgeting</div>
+        <ul class="bullet-list">
+          <li><strong>Automatic Model Rotation:</strong> If the primary model (Gemini 2.0 Flash) encounters a 404 (retired model) or quota exhaustion (429), it automatically rotates to backup models.</li>
+          <li><strong>Groq Secondary Provider:</strong> Full cross-provider redundancy via Groq (LLaMA-3.3-70B). Switching providers requires only changing LLM_PROVIDER in .env.</li>
+          <li><strong>Daily Quota Protection:</strong> LLM_DAILY_BUDGET enforces a per-model ceiling (default 20 calls/day), preventing cloud API overages.</li>
+          <li><strong>Thread-Safe Rate Limiting:</strong> Outgoing client calls are paced by a shared sliding-window rate limiter (10 req/min).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title teal">Offline Fallback Net (fallback.py)</div>
+        <ul class="bullet-list">
+          <li><strong>Zero-Downtime Guarantee:</strong> When all LLM models are exhausted or network is unavailable, the system switches to fallback.py.</li>
+          <li><strong>Local Rule-Based Execution:</strong> Executes local FAISS search, policy extraction, and order checks using fixed templates without calling external APIs.</li>
+          <li><strong>Graceful Status Surfacing:</strong> GET /api/health surfaces 'quota_exhausted', updating the widget status indicator to amber without crashing.</li>
+          <li><strong>Eval Cache (LLM_CACHE):</strong> Stores SHA-256 hashed chat responses in data/llm_cache.json, allowing benchmark reruns without consuming LLM API calls.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12 -->
+  <div class="slide" data-index="12">
+    <div class="slide-header">
+      <div class="badge">Project Conclusion</div>
+      <h2 class="slide-title">Summary & Technical Architecture Matrix</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-title navy">End-to-End Technology Stack</div>
+        <ul class="bullet-list">
+          <li><strong>Backend Application:</strong> Python 3.11, Flask (Host 127.0.0.1, Debug Off), Flask-CORS, Requests, Threading.</li>
+          <li><strong>Semantic Vectors & Retrieval:</strong> SentenceTransformers (all-MiniLM-L6-v2), FAISS (IndexFlatIP), Scikit-Learn TF-IDF.</li>
+          <li><strong>Speech & Language:</strong> OpenAI Whisper (ASR), langdetect, deep-translator (Google Translate API).</li>
+          <li><strong>Agent & LLMs:</strong> Google Gemini 2.0 Flash (google-genai SDK), Groq LLaMA 3.3-70B (httpx).</li>
+          <li><strong>Storage & Data Formats:</strong> Apache Parquet, PyArrow, SQLite3, JSON.</li>
+          <li><strong>Frontend Storefront:</strong> HTML5, CSS3, Vanilla JS (Hash Router), Shadow DOM Chat Widget.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title emerald">Key Takeaways & Future Horizons</div>
+        <ul class="bullet-list">
+          <li><strong>High-Accuracy Semantic Retrieval:</strong> 97.5% Hit@3 and 100% nonsense rejection achieved through hybrid RRF dense + sparse search.</li>
+          <li><strong>Factual Reliability Guaranteed:</strong> Strict negative grounding constraints eliminate hallucinations on price, stock, and return rules.</li>
+          <li><strong>Bilingual Parity Achieved:</strong> Natural interaction in both English and Arabic with automated layout, currency, and language switching.</li>
+          <li><strong>Future Roadmap:</strong> On-device multilingual embeddings (e.g. multilingual-e5) to eliminate external translation dependencies entirely.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="deck-footer">
+    <div>ShopBot NLP System • University Master's Presentation</div>
+    <div style="display:flex; gap: 12px; align-items:center;">
+      <button class="nav-btn" id="prevBtn" onclick="prevSlide()">◀ Prev</button>
+      <span id="slideCounter" style="font-weight:700; color:var(--dark);">Slide 1 / 12</span>
+      <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Next ▶</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let currentSlide = 1;
+  const totalSlides = 12;
+
+  function showSlide(index) {
+    if (index < 1 || index > totalSlides) return;
+    currentSlide = index;
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    const target = document.querySelector(`.slide[data-index="${currentSlide}"]`);
+    if (target) target.classList.add('active');
+
+    document.getElementById('slideCounter').innerText = `Slide ${currentSlide} / ${totalSlides}`;
+    document.getElementById('prevBtn').disabled = (currentSlide === 1);
+    document.getElementById('nextBtn').disabled = (currentSlide === totalSlides);
+  }
+
+  function nextSlide() { showSlide(currentSlide + 1); }
+  function prevSlide() { showSlide(currentSlide - 1); }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') nextSlide();
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') prevSlide();
+  });
+
+  showSlide(1);
+</script>
+
+</body>
+</html>
